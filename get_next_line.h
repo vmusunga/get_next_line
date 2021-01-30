@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define BUFFER_SIZE
+
 
 
 #endif
