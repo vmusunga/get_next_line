@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/02 14:40:32 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:29:43 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		get_next_line(int fd, char **line)
 
 	fd = open(FILE, O_RDONLY);
 
-	//printf("size: %d\n", ft_line_size(fd));
+	printf("size:\t%d\n", ft_line_size(fd));
 	if (!(*line = malloc(sizeof(char) * ft_line_size(fd))))
 		return (0);
 	if (!(buffer = malloc(sizeof(char) * BUFFER_SIZE)))
@@ -37,32 +37,27 @@ int		get_next_line(int fd, char **line)
 		while (buffer[x] && buffer[x] != '\n')
 		{
 			*line[i++] = buffer[x++];
-			printf("%s\n", *line);
+			printf("*line :\t%s\n", *line);
+			printf("buf :\t%s\n", buffer);
 		}
 		if (buffer[x] == '\n')
 			return (1);
 	}
-
+	printf("TEST");
 	*line[i] = '\0';
-	//printf("line : %s\n", line);
+
 	//printf("buffer : %s\n", buffer);
 	close(fd);
 	return (0);
-	free(line);
-	free(buffer);
 }
 
 int		main(int argc, char *argv[])
 {
 	int fd;
-	char *res;
-	char *line[100];
+	char *line;
 
 	argc = 2;
 	fd = open(argv[1], O_RDONLY);
-	get_next_line(fd, line);
-	res = *line;
-	printf("%d\n", get_next_line(fd, line));
-	printf("%s\n",res);
+	get_next_line(fd, &line);
 	return (0);
 }
