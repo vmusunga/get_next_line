@@ -6,11 +6,11 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/01/26 16:20:53 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/02 13:14:09 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../get_next_line.h"
+#include "get_next_line.h"
 
 int	ft_line_size(int fd)
 {
@@ -18,17 +18,21 @@ int	ft_line_size(int fd)
 	char b;
 
 	i = 0;
-	open(fd, O_RDONLY);
-	while ((read(fd, &b, 1) > 0) && (b != '\n' || b != '\0'))
+	fd = open(FILE, O_RDONLY);
+	while ((read(fd, &b, 1) > 0))
+	{
+		if (b == '\n' || b == '\0')
+			break;
 		i++;
+	}
+	close(fd);
 	return (i);
 }
 
 int	ft_error(int fd)
 {
-	if (!(open(fd, O_RDONLY)))
+	if (!(fd = open(FILE, O_RDONLY)))
 		return (-1);
-	if (!((read(fd, &b, 1) > 0) && (b != '\n' || b != '\0')))
-		return (-2);
+	close(fd);
 	return (1);
 }

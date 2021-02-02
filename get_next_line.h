@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:42 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/01/26 16:31:42 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/02 14:40:59 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
-# define BUFFER_SIZE
+# include <stdio.h>
 
+# define BUFFER_SIZE 10
+# define FILE "file.txt"
 
+int	ft_error(int fd);
+int	ft_line_size(int fd);
+int	get_next_line(int fd, char **line);
 
 #endif
