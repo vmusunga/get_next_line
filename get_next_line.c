@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/02 15:29:43 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/08 15:52:43 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_next_line(int fd, char **line)
 	printf("size:\t%d\n", ft_line_size(fd));
 	if (!(*line = malloc(sizeof(char) * ft_line_size(fd))))
 		return (0);
-	if (!(buffer = malloc(sizeof(char) * BUFFER_SIZE)))
+	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (0);
 
 	i = 0;
@@ -57,7 +57,8 @@ int		main(int argc, char *argv[])
 	char *line;
 
 	argc = 2;
-	fd = open(argv[1], O_RDONLY);
+	fd = open(FILE, O_RDONLY);
 	get_next_line(fd, &line);
+	close(fd);
 	return (0);
 }

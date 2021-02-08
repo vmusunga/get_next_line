@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/02 13:14:09 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/08 13:41:55 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ int	ft_line_size(int fd)
 
 int	ft_error(int fd)
 {
-	if (!(fd = open(FILE, O_RDONLY)))
+	fd = open(FILE, O_RDONLY);
+	if (fd == -1)
 		return (-1);
-	close(fd);
+	if (close(fd) == -1)
+		return (-2);
 	return (1);
 }
