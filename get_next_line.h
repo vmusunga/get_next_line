@@ -19,7 +19,7 @@
 
 # include <stdio.h>
 
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 50
 # define FILE "file.txt"
 
 int	ft_error(int fd);

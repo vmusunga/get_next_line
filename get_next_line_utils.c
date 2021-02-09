@@ -25,16 +25,13 @@ int	ft_line_size(int fd)
 			break;
 		i++;
 	}
-	close(fd);
+	//close(fd);
 	return (i);
 }
 
 int	ft_error(int fd)
 {
-	fd = open(FILE, O_RDONLY);
 	if (fd == -1)
 		return (-1);
-	if (close(fd) == -1)
-		return (-2);
 	return (1);
 }
