@@ -1,10 +1,4 @@
 Ceci est la premiere phrase.
-ca marche jamais 
-du premier coup...
-Bonjour ekjfnejclekmpoemcsmdclerm
-ligne
-
-wfdw
-
-
-wueg
+Ceci est la deuxieme..
+Et voila la troisieme...
+Fini !

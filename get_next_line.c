@@ -6,88 +6,84 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/08 15:52:43 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/10 14:19:13 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*int	get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int i;
-	static int x;
+	int x;
 	int y;
 	int j;
 	int a;
-	static int bytes;
+	int bytes;
 	char *buffer;
 	static char *save;
+	static char *new_save;
 
 	y = 0;
+	i = 0;
+	printf("saveb	:	%s\n", save);
+	if (save != NULL)
+	{
+		while (save[i])
+		{
+			if (save[i] == '\n' && save[i + 1])
+			{
+				i++;
+				while (save[i])
+					new_save[a++] = save[i++];
+				clear_save(save);
+				return (1);
+			}
+			else if (save[i] == '\n')
+			{
+				clear_save(save);
+				return (1);
+			}
+			line[j][i] = save[i];
+			i++;
+		}
+	}
+	clear_save(save);
+
 	if (ft_error(fd) < 0)
 		return (-1);
+
 	//printf("size:\t%d\n", ft_line_size(fd));
 	if (!(*line = malloc(sizeof(char) * (ft_line_size(fd) + 1))))
 		return (3);
 	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
-	
-	i = 0;
+	if (!(save = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (3);
+	if (!(new_save = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (3);
+
 	j = 0;
 	while ((bytes = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
-		printf("bytes : %d\n", bytes);
 		x = 0;
 		while (buffer[x] && buffer[x] != '\n')
-		{
 			line[j][i++] = buffer[x++];
-			//printf("buffer : %s\n", buffer);
-		}
-		printf("buffer :\t%s\n", buffer);
 		if (buffer[x] == '\n')
 		{
 			y = 1;
 			break;
 		}
 	}
-	x++;
-	a = 0;
-	if (!(save = (char*)malloc(sizeof(char) * (bytes - x))))
-			return (3);
-	while (bytes - x && buffer[x])
-	{
-		save[a++] = buffer[x++];
-	}
-	printf("save :%s\n", save);
+	printf("B | buffer :\t%s\n", buffer);
+	save = save_buffer(buffer);
+	printf("S | save :\t%s\n", save);
+	printf("S | new :\t%s\n", new_save);
 	line[j][i] = '\0';
 	return (y);
 }
-*/
 
-char *save_buffer(char *buffer)
-{
-	int i;
-	int a;
-	char *save;
-	
-	a = 0;
-	i = 0;
-	if (!(save = malloc(sizeof(char) * (BUFFER_SIZE))))
-		return (0);
-	while (buffer[i] != '\n' && buffer[i])
-		i++;
-	while (buffer[i])
-		save[a++] = buffer[i++];
-	save[i] = '\0';
-	return (save);
-}
-
-void	clear_save(char *save)
-{
-	free(save);
-	save = NULL;
-}
-
+/*
 int	get_next_line(int fd, char **line)
 {
 	
@@ -113,21 +109,25 @@ int	get_next_line(int fd, char **line)
 		save2[j++] = save[i++]; 
 	}
 }
+*/
 
 int		main()
 {
 	int fd;
 	int x;
 	int y;
+	int phrase;
 	char *line;
 
+	phrase = 1;
 	y = 0;
 	fd = open(FILE, O_RDONLY);
-	while (y < 10)
+	while (y < 5)
 	{
 		x = get_next_line(fd, &line);
 		y++;
-		printf("%d | *line :\t%s\n", x, line);
+		printf("%d | *line :\t%s\n\n", phrase, line);
+		phrase++;
 	}
 	close(fd);
 	return (0);
