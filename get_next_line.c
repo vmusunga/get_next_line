@@ -26,12 +26,12 @@ int	get_next_line(int fd, char **line)
 
 	y = 0;
 	i = 0;
-	printf("saveb	:	%s\n", save);
+	//printf("saveb	:	%s\n", save);
 	if (save != NULL)
 	{
 		while (save[i])
 		{
-			if (save[i] == '\n' && save[i + 1])
+			/*if (save[i] == '\n' && save[i + 1])
 			{
 				i++;
 				while (save[i])
@@ -43,8 +43,9 @@ int	get_next_line(int fd, char **line)
 			{
 				clear_save(save);
 				return (1);
-			}
+			}*/
 			line[j][i] = save[i];
+			printf("--(%d)%c",i ,line[j][i]);
 			i++;
 		}
 	}
@@ -63,7 +64,7 @@ int	get_next_line(int fd, char **line)
 	if (!(new_save = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
 
-	j = 0;
+	
 	while ((bytes = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
@@ -74,10 +75,10 @@ int	get_next_line(int fd, char **line)
 			y = 1;
 			break;
 		}
-	}
-	printf("B | buffer :\t%s\n", buffer);
+	} 
+	//printf("B | buffer :\t%s\n", buffer);
 	save = save_buffer(buffer);
-	printf("S | save :\t%s\n", save);
+	printf("\nS | save :\t%s\n", save);
 	printf("S | new :\t%s\n", new_save);
 	line[j][i] = '\0';
 	return (y);
