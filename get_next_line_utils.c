@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 13:31:44 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/15 16:26:45 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,20 @@ char *save_buffer(char *buffer)
 	return (save);
 }
 
-void	clear_save(char *save)
+char*	clear_save(char *save)
 {
+	int i;
+	char *tmp;
+	int x;
+
+	i = 0;
+	x = 0;
+	tmp = malloc(sizeof(char) * 100);
+	while (save[i] != '\n')
+		i++;
+	i++;
+	while(save[i])
+		tmp[x++] = save[i++];
 	free(save);
-	save = NULL;
+	return (tmp);
 }
