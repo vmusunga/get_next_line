@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/10 14:19:13 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/15 13:19:48 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,29 @@ int	get_next_line(int fd, char **line)
 	char *buffer;
 	static char *save;
 	static char *new_save;
+	char *part1;
+	char *part2;
+
+	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (3);
+	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (3);
 
 	y = 0;
 	i = 0;
 	//printf("saveb	:	%s\n", save);
 	if (save != NULL)
 	{
-		while (save[i])
+		new_save = save_buffer(save);
+		while (save [i] && save[i] != '\n')
 		{
-			/*if (save[i] == '\n' && save[i + 1])
-			{
-				i++;
-				while (save[i])
-					new_save[a++] = save[i++];
-				clear_save(save);
-				return (1);
-			}
-			else if (save[i] == '\n')
-			{
-				clear_save(save);
-				return (1);
-			}*/
-			line[j][i] = save[i];
-			printf("--(%d)%c",i ,line[j][i]);
+			part1[i] = save[i];
+			
 			i++;
 		}
 	}
+	//printf("PART1 %s\n",part1);
+	//printf("NEW_SAVE %s\n",new_save);
 	clear_save(save);
 
 	if (ft_error(fd) < 0)
@@ -69,18 +66,20 @@ int	get_next_line(int fd, char **line)
 	{
 		x = 0;
 		while (buffer[x] && buffer[x] != '\n')
-			line[j][i++] = buffer[x++];
+			part2[i++] = buffer[x++];
 		if (buffer[x] == '\n')
 		{
 			y = 1;
 			break;
 		}
-	} 
+	}
 	//printf("B | buffer :\t%s\n", buffer);
 	save = save_buffer(buffer);
+	//ft_memccpy(save, buffer, '\n', BUFFER_SIZE);
+	//ft_memccpy(new_save, ft_memccpy(save, buffer, '\n', BUFFER_SIZE), '\n', BUFFER_SIZE);
 	printf("\nS | save :\t%s\n", save);
-	printf("S | new :\t%s\n", new_save);
-	line[j][i] = '\0';
+	//printf("S | new :\t%s\n", new_save);
+	*line = ft_strjoin(part1, part2);
 	return (y);
 }
 
