@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 16:26:45 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/15 16:58:29 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char *save_buffer(char *buffer)
 	return (save);
 }
 
-char*	clear_save(char *save)
+char*	save_trim(char *save)
 {
 	int i;
 	char *tmp;
@@ -147,4 +147,14 @@ char*	clear_save(char *save)
 		tmp[x++] = save[i++];
 	free(save);
 	return (tmp);
+}
+
+int		check_n(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	return (i);
 }

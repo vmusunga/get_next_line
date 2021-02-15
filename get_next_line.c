@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 16:30:09 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/15 17:04:36 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_next_line(int fd, char **line)
 	
 	y = 0;
 	i = 0;
-
+	
 	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
 	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
@@ -32,7 +32,7 @@ int	get_next_line(int fd, char **line)
 
 	if (save != NULL)
 	{
-		save = clear_save(save);
+		save = save_trim(save);
 		while (save[i] && save[i] != '\n')
 		{
 			part1[i] = save[i];
