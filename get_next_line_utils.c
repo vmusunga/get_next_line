@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/16 12:38:29 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/16 15:58:24 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ size_t		ft_strlen(const char *str)
 	return (x);
 }
 
+
 int	ft_line_size(int fd)
 {
 	int i;
@@ -29,7 +30,7 @@ int	ft_line_size(int fd)
 
 	i = 0;
 	fd = open(FILE, O_RDONLY);
-	while ((read(fd, &b, 1) > 0))
+	while (read(fd, &b, 1) > 0)
 	{
 		if (b == '\n' || b == '\0')
 			break;
@@ -91,46 +92,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (dest);
 }
 
-void	*ft_memcpy(void *dst, const void *src, int c, size_t n)
-{
-	size_t i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (((unsigned char*)src)[i] != ((unsigned char)c))
-		{
-			((unsigned char*)dst)[i] = ((unsigned char*)src)[i];
-			i++;
-		}
-		else
-		{
-			((unsigned char*)dst)[i] = ((unsigned char*)src)[i];
-			return (&dst[i + 1]);
-		}
-	}
-	return (NULL);
-}
-
-char *save_buffer(char *buffer)
-{
-	int i;
-	int a;
-	char *save;
-	
-	a = 0;
-	i = 0;
-	if (!(save = malloc(sizeof(char) * (BUFFER_SIZE))))
-		return (0);
-	while (buffer[i] != '\n' && buffer[i])
-		i++;
-	i++;
-	while (buffer[i])
-		save[a++] = buffer[i++];
-	save[a] = '\0';
-	return (save);
-}
-
 char*	save_trim(char *save)
 {
 	int i;
@@ -154,23 +115,7 @@ int		check_n(char *str)
 	int i;
 
 	i = 0;
-	while (str[i] && str[i] != '\n')
+	while (str[i] != '\n' && str[i])
 		i++;
 	return (i);
-}
-
-char	*add_back(char *save, char *str)
-{
-	int x;
-	int c;
-	char *tmp;
-
-	x = ft_strlen(str);
-	c = ft_strlen(save);
-	if(!(tmp = malloc(sizeof(char) * (c + x + 1))))
-		return (0);
-	tmp = ft_strjoin(save, str);
-	free(save);
-	save = ft_strdup(tmp);
-	return (tmp);
 }

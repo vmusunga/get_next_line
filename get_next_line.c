@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/16 13:07:15 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/16 16:46:01 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	get_next_line(int fd, char **line)
 {
 	int i;
+	int j;
 	int x;
 	int y;
 	int byte;
@@ -26,61 +27,61 @@ int	get_next_line(int fd, char **line)
 	y = 0;
 	i = 0;
 
+	if (ft_error(fd) < 0)
+		return (-1);
+	printf("1----%s\n", part1);
 	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
 	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
-
+	if (!(*line = malloc(sizeof(char) * (ft_line_size(fd) + 1))))
+		return (3);
+	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (3);
+	printf("2----%s\n", part1);
 	if (save != NULL)
 	{
-		//printf("1----------%s\n", save);
 		save = save_trim(save);
-		//printf("2----------%s\n", save);
+		
 		while (save[i] && save[i] != '\n')
 		{
 			part1[i] = save[i];
 			i++;
 		}
 		if (save[i] == '\0')
+		{
 			free(save);
+			save = NULL;
+		}
 	}
-
-	if (ft_error(fd) < 0)
-		return (-1);
-
-	if (!(*line = malloc(sizeof(char) * (ft_line_size(fd) + 1))))
-		return (3);
-	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (3);
-
-
+	printf("3----%s\n", part1);
+	j = 0;
 	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
 		while (buffer[x] && buffer[x] != '\n')
 		{
-			//printf("B----------%s\n", buffer);
-			part2[x] = buffer[x];
-			x++;
+			part2[j++] = buffer[x++];
 		}
-		//printf("part2\t%s\n", part2);
 		if (buffer[x] == '\n')
 		{
 			y = 1;
 			break;
 		}
-		if (buffer[byte] == '\0')
-		{
-			*line = ft_strjoin(*line, part2);
-		}
+		else if (buffer[x] == EOF)
+			break;
 	}
-
+	printf("4----%s\n", part1);
 	if (!save)
 		save = ft_strdup(buffer);
 	else
 		save = ft_strjoin(save, buffer);
 	*line = ft_strjoin(part1, part2);
 	return (y);
+	free(part1);
+	part1 = NULL;
+	free(part2);
+	part2 = NULL;
 }
 
 int		main()
