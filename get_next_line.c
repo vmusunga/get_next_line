@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 17:04:36 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:07:15 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	get_next_line(int fd, char **line)
 	int i;
 	int x;
 	int y;
+	int byte;
 	char *buffer;
 	static char *save;
 	char *part1;
@@ -24,7 +25,7 @@ int	get_next_line(int fd, char **line)
 	
 	y = 0;
 	i = 0;
-	
+
 	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
 	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
@@ -32,14 +33,18 @@ int	get_next_line(int fd, char **line)
 
 	if (save != NULL)
 	{
+		//printf("1----------%s\n", save);
 		save = save_trim(save);
+		//printf("2----------%s\n", save);
 		while (save[i] && save[i] != '\n')
 		{
 			part1[i] = save[i];
 			i++;
 		}
-	//printf("saveclear -> %s\n", save);
+		if (save[i] == '\0')
+			free(save);
 	}
+
 	if (ft_error(fd) < 0)
 		return (-1);
 
@@ -49,18 +54,24 @@ int	get_next_line(int fd, char **line)
 		return (3);
 
 
-	while ((read(fd, buffer, BUFFER_SIZE)) > 0)
+	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
 		while (buffer[x] && buffer[x] != '\n')
 		{
+			//printf("B----------%s\n", buffer);
 			part2[x] = buffer[x];
 			x++;
 		}
+		//printf("part2\t%s\n", part2);
 		if (buffer[x] == '\n')
 		{
 			y = 1;
 			break;
+		}
+		if (buffer[byte] == '\0')
+		{
+			*line = ft_strjoin(*line, part2);
 		}
 	}
 
@@ -68,10 +79,6 @@ int	get_next_line(int fd, char **line)
 		save = ft_strdup(buffer);
 	else
 		save = ft_strjoin(save, buffer);
-
-	//printf("savejoin -> %s\n", save);
-	//printf("BUFF |	:	%s\n", buffer);
-	//printf("\nS | save :\t%s\n", save);
 	*line = ft_strjoin(part1, part2);
 	return (y);
 }

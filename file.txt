@@ -1,4 +1,4 @@
-Ceci est la premiere phrase.
+Voici la premiere phrase.
 Ceci est la deuxieme..
 Et voila la troisieme...
 Fini !

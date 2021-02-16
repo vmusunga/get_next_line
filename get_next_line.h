@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:42 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 16:36:48 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/16 13:06:31 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ char	*ft_strjoin(char *s1, char *s2);
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n);
 size_t		ft_strlen(const char *str);
 int		check_n(char *str);
+char	*add_back(char *str, char *save);
 
 #endif

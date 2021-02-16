@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/15 16:58:29 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/16 12:38:29 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*dest;
 
 	i = 0;
-	if ((!s1) || (!s2))
-		return (NULL);
+	//if ((!s1) || (!s2))
+	//	return (NULL);
 	if (!(dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
 		return (NULL);
 	while (s1[i])
@@ -157,4 +157,20 @@ int		check_n(char *str)
 	while (str[i] && str[i] != '\n')
 		i++;
 	return (i);
+}
+
+char	*add_back(char *save, char *str)
+{
+	int x;
+	int c;
+	char *tmp;
+
+	x = ft_strlen(str);
+	c = ft_strlen(save);
+	if(!(tmp = malloc(sizeof(char) * (c + x + 1))))
+		return (0);
+	tmp = ft_strjoin(save, str);
+	free(save);
+	save = ft_strdup(tmp);
+	return (tmp);
 }
