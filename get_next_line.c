@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/16 16:46:01 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/17 13:55:13 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	get_next_line(int fd, char **line)
 	int j;
 	int x;
 	int y;
+	int a;
 	int byte;
 	char *buffer;
 	static char *save;
@@ -26,6 +27,7 @@ int	get_next_line(int fd, char **line)
 	
 	y = 0;
 	i = 0;
+	a = 0;
 
 	if (ft_error(fd) < 0)
 		return (-1);
@@ -42,12 +44,14 @@ int	get_next_line(int fd, char **line)
 	if (save != NULL)
 	{
 		save = save_trim(save);
-		
+		//append_till_n(save, part1, '\n');
+		//part1 = append_till_n2(save, '\n');
 		while (save[i] && save[i] != '\n')
 		{
-			part1[i] = save[i];
-			i++;
+			part1[a++] = save[i++];
+			printf("part1 --> %c\n", part1[i]);
 		}
+		printf("part1 --> %c\n", part1[i]);
 		if (save[i] == '\0')
 		{
 			free(save);
@@ -59,10 +63,10 @@ int	get_next_line(int fd, char **line)
 	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
+		//append_till_n(buffer, part2, '\n');
+		//part2 = append_till_n2(buffer, '\n');
 		while (buffer[x] && buffer[x] != '\n')
-		{
 			part2[j++] = buffer[x++];
-		}
 		if (buffer[x] == '\n')
 		{
 			y = 1;
@@ -74,7 +78,7 @@ int	get_next_line(int fd, char **line)
 	printf("4----%s\n", part1);
 	if (!save)
 		save = ft_strdup(buffer);
-	else
+	else if (x != byte || x != '\0')
 		save = ft_strjoin(save, buffer);
 	*line = ft_strjoin(part1, part2);
 	return (y);

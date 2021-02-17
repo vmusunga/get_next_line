@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/16 15:58:24 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/17 13:55:14 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,34 @@ int		check_n(char *str)
 	while (str[i] != '\n' && str[i])
 		i++;
 	return (i);
+}
+
+void	append_till_n(char *src, char *dst, char n)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while(dst[x] && dst[x] != n)
+		dst[x++] = src[y++];
+	return ;
+}
+
+char	*append_till_n2(char *src, char n)
+{
+	int x;
+	int y;
+	char *dst;
+
+	x = 0;
+	y = 0;
+	while(dst[x] && dst[x] != n)
+		x++;
+	if (!(dst = malloc(sizeof(char) * (x + 1))))
+		return (NULL);
+	x = 0;
+	while(dst[x] && dst[x] != n)
+		dst[x++] = src[y++];
+	return (dst);
 }
