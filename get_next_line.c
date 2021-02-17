@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/17 13:55:13 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:36:12 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	get_next_line(int fd, char **line)
 	char *part2;
 	
 	y = 0;
-	i = 0;
-	a = 0;
+	
 
 	if (ft_error(fd) < 0)
 		return (-1);
+
 	printf("1----%s\n", part1);
+
 	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
 	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
@@ -40,31 +41,28 @@ int	get_next_line(int fd, char **line)
 		return (3);
 	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (3);
+
 	printf("2----%s\n", part1);
+
+	i = 0;
+	a = 0;
 	if (save != NULL)
 	{
 		save = save_trim(save);
-		//append_till_n(save, part1, '\n');
-		//part1 = append_till_n2(save, '\n');
+		
 		while (save[i] && save[i] != '\n')
-		{
 			part1[a++] = save[i++];
-			printf("part1 --> %c\n", part1[i]);
-		}
-		printf("part1 --> %c\n", part1[i]);
+
 		if (save[i] == '\0')
-		{
-			free(save);
-			save = NULL;
-		}
+			ft_clean(save);
 	}
+
 	printf("3----%s\n", part1);
+	
 	j = 0;
 	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
-		//append_till_n(buffer, part2, '\n');
-		//part2 = append_till_n2(buffer, '\n');
 		while (buffer[x] && buffer[x] != '\n')
 			part2[j++] = buffer[x++];
 		if (buffer[x] == '\n')
@@ -75,17 +73,16 @@ int	get_next_line(int fd, char **line)
 		else if (buffer[x] == EOF)
 			break;
 	}
-	printf("4----%s\n", part1);
+	
 	if (!save)
 		save = ft_strdup(buffer);
 	else if (x != byte || x != '\0')
 		save = ft_strjoin(save, buffer);
 	*line = ft_strjoin(part1, part2);
+
 	return (y);
-	free(part1);
-	part1 = NULL;
-	free(part2);
-	part2 = NULL;
+	ft_clean(part1);
+	ft_clean(part2);
 }
 
 int		main()

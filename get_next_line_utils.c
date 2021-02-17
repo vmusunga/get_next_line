@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:20:53 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/17 13:55:14 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:42:21 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (dest);
 }
 
+int		check_n(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\n' && str[i])
+		i++;
+	return (i);
+}
+
 char*	save_trim(char *save)
 {
 	int i;
@@ -100,7 +110,8 @@ char*	save_trim(char *save)
 
 	i = 0;
 	x = 0;
-	tmp = malloc(sizeof(char) * 100);
+	if(!(tmp = malloc(sizeof(char) * (ft_strlen(save) + 1))))
+		return (0);
 	while (save[i] != '\n')
 		i++;
 	i++;
@@ -110,14 +121,10 @@ char*	save_trim(char *save)
 	return (tmp);
 }
 
-int		check_n(char *str)
+void	ft_clean(char *str)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\n' && str[i])
-		i++;
-	return (i);
+	free(str);
+	str = NULL;
 }
 
 void	append_till_n(char *src, char *dst, char n)
@@ -135,17 +142,18 @@ void	append_till_n(char *src, char *dst, char n)
 char	*append_till_n2(char *src, char n)
 {
 	int x;
-	int y;
 	char *dst;
 
 	x = 0;
-	y = 0;
-	while(dst[x] && dst[x] != n)
+	while(src[x] && src[x] != n)
 		x++;
 	if (!(dst = malloc(sizeof(char) * (x + 1))))
 		return (NULL);
 	x = 0;
-	while(dst[x] && dst[x] != n)
-		dst[x++] = src[y++];
+	while(src[x] && src[x] != n)
+	{
+		dst[x] = src[x];
+		x++;
+	}
 	return (dst);
 }

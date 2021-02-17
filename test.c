@@ -26,14 +26,32 @@ int		check_n(char *str)
 	return (i);
 }
 
+char	*append_till_n2(char *src, char n)
+{
+	int x;
+	char *dst;
+
+	x = 0;
+	while(src[x] && src[x] != n)
+		x++;
+	if (!(dst = malloc(sizeof(char) * (x + 1))))
+		return (NULL);
+	x = 0;
+	while(src[x] && src[x] != n)
+	{
+		dst[x] = src[x];
+		x++;
+	}
+	return (dst);
+}
 
 int main ()
 {
 	int fd;
-	char *str = "tam\nere";
+	char *str = "tagrossem\nere";
 	fd = open(FILE, O_RDONLY);
 	//printf("%d\n",ft_line_size(fd));
-	printf("%d\n", check_n(str));
+	printf("%s\n", append_till_n2(str, '\n'));
 
 	return (0);
 }
