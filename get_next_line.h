@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:42 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/17 16:50:47 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:47:58 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # include <stdio.h>
 
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 10
 # define FILE "file.txt"
 
 int	ft_error(int fd);

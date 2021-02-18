@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/17 16:36:12 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/18 12:02:35 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	get_next_line(int fd, char **line)
 	if (save != NULL)
 	{
 		save = save_trim(save);
-		
-		while (save[i] && save[i] != '\n')
-			part1[a++] = save[i++];
-
-		if (save[i] == '\0')
+		part1 = append_till_n2(save, '\n');
+		//while (save[i] && save[i] != '\n')
+		//	part1[a++] = save[i++];
+ 
+		if (save[i] == '\0' || save[i] == '\n')
 			ft_clean(save);
 	}
 
@@ -63,8 +63,10 @@ int	get_next_line(int fd, char **line)
 	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		x = 0;
-		while (buffer[x] && buffer[x] != '\n')
-			part2[j++] = buffer[x++];
+		buffer[byte] = '\0';
+		part2 = append_till_n2(buffer, '\n');
+		//while (buffer[x] && buffer[x] != '\n')
+		//	part2[j++] = buffer[x++];
 		if (buffer[x] == '\n')
 		{
 			y = 1;
@@ -79,10 +81,10 @@ int	get_next_line(int fd, char **line)
 	else if (x != byte || x != '\0')
 		save = ft_strjoin(save, buffer);
 	*line = ft_strjoin(part1, part2);
-
-	return (y);
 	ft_clean(part1);
 	ft_clean(part2);
+	return (y);
+
 }
 
 int		main()
