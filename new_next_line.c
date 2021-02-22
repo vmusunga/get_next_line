@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/22 18:37:13 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/22 19:07:12 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,20 @@ int	get_next_line(int fd, char **line)
 
 		buffer[byte] = '\0';
 		save = ft_strdup(buffer);
-		printf("%c\n", save[x]);
+		printf("-> %s\n", save);
 		if (save[x] == '\n')
 		{
 			save[x] = '\0';
 			*line = ft_strjoin(*line, save);
-			save = ft_strdup(&save[x + 1]);
+			save = ft_strdup(&save[x + 1]);						//ICI
 			return(1);
 		}
 		if (save[x] == '\0')
 		{
-			*line = ft_strjoin(*line, save);
+			if (!*line)
+				*line = ft_strdup(save);
+			else
+				*line = ft_strjoin(*line, save);				//JOIN(SAVE,BUFFER)?
 			free(save);
 			byte = read(fd, buffer, BUFFER_SIZE);
 			x = -1;
