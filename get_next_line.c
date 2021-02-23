@@ -5,88 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 16:21:37 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/18 12:02:35 by vmusunga         ###   ########.fr       */
+/*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
+/*   Updated: 2021/02/23 16:25:35 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	get_next_line(int fd, char **line)
+char	*save_trim(char *save, int x)
 {
-	int i;
-	int j;
-	int x;
-	int y;
-	int a;
-	int byte;
-	char *buffer;
-	static char *save;
-	char *part1;
-	char *part2;
-	
-	y = 0;
-	
-
-	if (ft_error(fd) < 0)
-		return (-1);
-
-	printf("1----%s\n", part1);
-
-	if (!(part1 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (3);
-	if (!(part2 = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (3);
-	if (!(*line = malloc(sizeof(char) * (ft_line_size(fd) + 1))))
-		return (3);
-	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (3);
-
-	printf("2----%s\n", part1);
+	int		i;
+	char	*new;
+	int		new_len;
 
 	i = 0;
-	a = 0;
-	if (save != NULL)
-	{
-		save = save_trim(save);
-		part1 = append_till_n2(save, '\n');
-		//while (save[i] && save[i] != '\n')
-		//	part1[a++] = save[i++];
- 
-		if (save[i] == '\0' || save[i] == '\n')
-			ft_clean(save);
-	}
-
-	printf("3----%s\n", part1);
-	
-	j = 0;
-	while ((byte = read(fd, buffer, BUFFER_SIZE)) > 0)
-	{
-		x = 0;
-		buffer[byte] = '\0';
-		part2 = append_till_n2(buffer, '\n');
-		//while (buffer[x] && buffer[x] != '\n')
-		//	part2[j++] = buffer[x++];
-		if (buffer[x] == '\n')
-		{
-			y = 1;
-			break;
-		}
-		else if (buffer[x] == EOF)
-			break;
-	}
-	
-	if (!save)
-		save = ft_strdup(buffer);
-	else if (x != byte || x != '\0')
-		save = ft_strjoin(save, buffer);
-	*line = ft_strjoin(part1, part2);
-	ft_clean(part1);
-	ft_clean(part2);
-	return (y);
-
+	x = x + 1;
+	new_len = (ft_strlen(save) - x);
+	if (!(new = malloc(sizeof(char)*(new_len + 1))))
+		return (NULL);
+	while (save[x])
+		new[i++] = save[x++];
+	new[i] = '\0';
+	free(save);
+	return (new);
 }
 
+int		get_next_line(int fd, char **line)
+{
+	int			x;
+	int			byte;
+	char		*buffer;
+	static char	*save;
+
+	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		return (-1);
+	if (!save)
+		save = ft_strdup("");
+	x = 0;
+	while (1)
+	{
+		if (save[x] == '\n')
+		{
+			save[x] = '\0';
+			*line = ft_strdup(save);
+			save = save_trim(save,x);
+			return (1);
+		}
+		if (save[x] == '\0')
+		{
+			byte = read(fd, buffer, BUFFER_SIZE);
+			if (byte == 0)
+			{
+				*line = ft_strdup(save);
+				//free(save);
+				return (0);
+			}
+			if (byte == -1)
+				return (-1);
+			buffer[byte] = '\0';
+			save = ft_strjoin(save, buffer);
+			//free(buffer);
+			x = -1;
+		}
+		x++;
+	}
+	return (0);
+}
+
+/*
 int		main()
 {
 	int fd;
@@ -104,8 +90,9 @@ int		main()
 		y++;
 		printf("%d - %d | *line :\t%s\n\n", phrase, x, line);
 		phrase++;
+		free(line);
 	}
-	free(line);
+
 	close(fd);
 	return (0);
-}
+}*/

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/26 16:21:42 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/18 11:47:58 by vmusunga         ###   ########.fr       */
+/*   Created: 2021/02/22 11:47:21 by vmusunga          #+#    #+#             */
+/*   Updated: 2021/02/23 15:32:47 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,10 @@
 # define BUFFER_SIZE 10
 # define FILE "file.txt"
 
-int	ft_error(int fd);
-int	ft_line_size(int fd);
-int	get_next_line(int fd, char **line);
-char	*save_trim(char *save);
+size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char *s1, char *s2);
-size_t	ft_strlen(const char *str);
-void	ft_clean(char *str);
-int		check_n(char *str);
-void	append_till_n(char *src, char *dst, char n);
-char	*append_till_n2(char *src, char n);
+int		get_next_line(int fd, char **line);
+char	*save_trim(char *save, int x);
+
 #endif
