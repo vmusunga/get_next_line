@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:45:00 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/25 12:07:58 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/25 15:47:25 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,38 @@ size_t		ft_strlen(const char *str)
 	return (x);
 }
 
-void	ft_memzero(void *s)
+int free_error(char **s1, char **s2, int x, int a, int b)
 {
-	int i;
-
-	i = 0;
-	while (((char*)s)[i])
+	if (a == 1)
 	{
-		((char*)s)[i] = '\0';
-		i++;
+		free (*s1);
+		*s1 = NULL;
 	}
+	if (b == 1)
+	{
+		free (*s2);
+		*s2 = NULL;
+	}
+	return(x);
 }
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(char *s1)
 {
 	int		i;
 	char	*cpy;
-	size_t	len;
 
-	len = ft_strlen(s1);
 	i = 0;
-	if (!(cpy = malloc(sizeof(const char) * (len + 1))))
+	while (s1[i] && s1[i] != '\n')
+		i++;
+	if (!(cpy = malloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	while (s1[i])
+	i = 0;
+	while (s1[i] != '\n' && s1[i])
 	{
 		cpy[i] = s1[i];
 		i++;
 	}
 	cpy[i] = '\0';
-	//free ((void*)s1);
 	return (cpy);
 }
 
@@ -78,6 +81,8 @@ char		*ft_strjoin(char *s1, char *s2)
 	}
 	dest[i + x] = '\0';
 	free (s1);
-	//free (s2);
+	s1 = NULL;
+	free (s2);
+	s2 = NULL;
 	return (dest);
 }
