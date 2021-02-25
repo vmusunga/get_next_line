@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:45:00 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/23 13:42:32 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/25 12:07:58 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ size_t		ft_strlen(const char *str)
 	while (str[x])
 		x++;
 	return (x);
+}
+
+void	ft_memzero(void *s)
+{
+	int i;
+
+	i = 0;
+	while (((char*)s)[i])
+	{
+		((char*)s)[i] = '\0';
+		i++;
+	}
 }
 
 char	*ft_strdup(const char *s1)
@@ -38,6 +50,7 @@ char	*ft_strdup(const char *s1)
 		i++;
 	}
 	cpy[i] = '\0';
+	//free ((void*)s1);
 	return (cpy);
 }
 
@@ -64,5 +77,7 @@ char		*ft_strjoin(char *s1, char *s2)
 		x++;
 	}
 	dest[i + x] = '\0';
+	free (s1);
+	//free (s2);
 	return (dest);
 }

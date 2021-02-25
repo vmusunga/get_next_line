@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:47:21 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/23 15:32:47 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/25 12:22:14 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 int		get_next_line(int fd, char **line);
 char	*save_trim(char *save, int x);
+void	ft_memzero(void *s);
 
 #endif

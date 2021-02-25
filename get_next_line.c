@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/23 16:25:35 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/25 12:14:59 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int		get_next_line(int fd, char **line)
 	char		*buffer;
 	static char	*save;
 
-	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (-1);
+	
 	if (!save)
 		save = ft_strdup("");
 	x = 0;
@@ -53,6 +52,8 @@ int		get_next_line(int fd, char **line)
 		}
 		if (save[x] == '\0')
 		{
+			if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+				return (-1);
 			byte = read(fd, buffer, BUFFER_SIZE);
 			if (byte == 0)
 			{
@@ -64,7 +65,8 @@ int		get_next_line(int fd, char **line)
 				return (-1);
 			buffer[byte] = '\0';
 			save = ft_strjoin(save, buffer);
-			//free(buffer);
+			free(buffer);
+			ft_memzero(buffer);
 			x = -1;
 		}
 		x++;
