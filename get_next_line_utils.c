@@ -6,13 +6,13 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:45:00 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/25 15:47:25 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/26 16:06:31 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t		ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	int x;
 
@@ -22,19 +22,27 @@ size_t		ft_strlen(const char *str)
 	return (x);
 }
 
-int free_error(char **s1, char **s2, int x, int a, int b)
+void	ft_free(char **s1, char **s2, int a, int b)
 {
 	if (a == 1)
 	{
-		free (*s1);
+		free(*s1);
 		*s1 = NULL;
 	}
 	if (b == 1)
 	{
-		free (*s2);
+		free(*s2);
 		*s2 = NULL;
 	}
-	return(x);
+}
+
+int		ft_free_return(char **s1, char **s2, int x)
+{
+	free(*s1);
+	*s1 = NULL;
+	free(*s2);
+	*s2 = NULL;
+	return (x);
 }
 
 char	*ft_strdup(char *s1)
@@ -57,7 +65,7 @@ char	*ft_strdup(char *s1)
 	return (cpy);
 }
 
-char		*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		x;
@@ -80,9 +88,6 @@ char		*ft_strjoin(char *s1, char *s2)
 		x++;
 	}
 	dest[i + x] = '\0';
-	free (s1);
-	s1 = NULL;
-	free (s2);
-	s2 = NULL;
+	ft_free(&s1, &s2, 1, 1);
 	return (dest);
 }
