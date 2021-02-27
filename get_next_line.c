@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/27 14:38:10 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/27 15:51:00 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,18 @@ static int	line_saver(char **save, char **line, int fd)
 	if (byte == -1)
 		return (ft_free_return(save, &buffer, -1));
 	buffer[byte] = '\0';
-	*save = ft_strjoin(*save, buffer);
+	if (!(*save = ft_strjoin(*save, buffer)))
+		return (ft_free_return(save, &buffer, -1));
 	return (byte);
+}
+
+static int	line_saver2(char **save, char **line, int x)
+{
+	if (!(*line = ft_strdup(*save)))
+		return (ft_free_one(save, -1));
+	if (!(*save = save_trim(*save, x)))
+		return (ft_free_one(save, -1));
+	return (1);
 }
 
 int			get_next_line(int fd, char **line)
@@ -67,16 +77,15 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || !line)
 		return (-1);
 	if (!save)
-		save = ft_strdup("");
+	{
+		if (!(save = ft_strdup("")))
+			return (-1);
+	}
 	x = 0;
 	while (1)
 	{
 		if (save[x] == '\n')
-		{
-			*line = ft_strdup(save);
-			save = save_trim(save, x);
-			return (1);
-		}
+			return (line_saver2(&save, line, x));
 		if (save[x] == '\0')
 		{
 			if ((byte = line_saver(&save, line, fd)) == 0 || byte == -1)
