@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/02/27 14:38:10 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/02/27 14:38:15 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	ft_free_one(char **s1, int x)
 {
@@ -62,24 +62,24 @@ int			get_next_line(int fd, char **line)
 {
 	int			x;
 	int			byte;
-	static char	*save;
+	static char	*save[OPEN_MAX];
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || !line)
 		return (-1);
-	if (!save)
-		save = ft_strdup("");
+	if (!save[fd])
+		save[fd] = ft_strdup("");
 	x = 0;
 	while (1)
 	{
-		if (save[x] == '\n')
+		if (save[fd][x] == '\n')
 		{
-			*line = ft_strdup(save);
-			save = save_trim(save, x);
+			*line = ft_strdup(save[fd]);
+			save[fd] = save_trim(save[fd], x);
 			return (1);
 		}
-		if (save[x] == '\0')
+		if (save[fd][x] == '\0')
 		{
-			if ((byte = line_saver(&save, line, fd)) == 0 || byte == -1)
+			if ((byte = line_saver(&save[fd], line, fd)) == 0 || byte == -1)
 				return (byte);
 			x = -1;
 		}
