@@ -5,7 +5,7 @@ int          main(void)
    int fd;
    int ret;
    char *line;
-   fd = open("alphabet", O_RDONLY);
+   fd = open("test", O_RDONLY);
    while (1)
    {
       ret = get_next_line(fd, &line);
