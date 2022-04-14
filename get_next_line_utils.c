@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:45:00 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/03/01 15:48:50 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/04/30 11:54:10 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (str[x])
@@ -36,7 +36,7 @@ void	ft_free(char **s1, char **s2, int a, int b)
 	}
 }
 
-int		ft_free_return(char **s1, char **s2, int x)
+int	ft_free_return(char **s1, char **s2, int x)
 {
 	free(*s1);
 	*s1 = NULL;
@@ -53,7 +53,8 @@ char	*ft_strdup(char *s1)
 	i = 0;
 	while (s1[i] && s1[i] != '\n')
 		i++;
-	if (!(cpy = malloc(sizeof(char) * (i + 1))))
+	cpy = malloc(sizeof(char) * (i + 1));
+	if (!cpy)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\n' && s1[i])
@@ -74,7 +75,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	if ((!s1) || (!s2))
 		return (NULL);
-	if (!(dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
+	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!dest)
 		return (NULL);
 	while (s1[i])
 	{

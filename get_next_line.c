@@ -6,7 +6,7 @@
 /*   By: vmusunga <vmusunga@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:25:31 by vmusunga          #+#    #+#             */
-/*   Updated: 2021/03/01 15:49:03 by vmusunga         ###   ########.fr       */
+/*   Updated: 2021/04/30 12:20:46 by vmusunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static char	*save_trim(char *save, int x)
 	i = 0;
 	x = x + 1;
 	new_len = (ft_strlen(save) - x);
-	if (!(new = malloc(sizeof(char) * (new_len + 1))))
+	new = malloc(sizeof(char) * (new_len + 1));
+	if (!new)
 		return (NULL);
 	while (save[x])
 		new[i++] = save[x++];
@@ -43,7 +44,8 @@ static int	line_saver(char **save, char **line, int fd)
 	char	*buffer;
 	int		byte;
 
-	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
 		return (ft_free_one(save, -1));
 	byte = read(fd, buffer, BUFFER_SIZE);
 	if (byte == 0)
@@ -54,21 +56,24 @@ static int	line_saver(char **save, char **line, int fd)
 	if (byte == -1)
 		return (ft_free_return(save, &buffer, -1));
 	buffer[byte] = '\0';
-	if (!(*save = ft_strjoin(*save, buffer)))
+	*save = ft_strjoin(*save, buffer);
+	if (!*save)
 		return (ft_free_return(save, &buffer, -1));
 	return (byte);
 }
 
 static int	line_saver2(char **save, char **line, int x)
 {
-	if (!(*line = ft_strdup(*save)))
+	*line = ft_strdup(*save);
+	if (!*line)
 		return (ft_free_one(save, -1));
-	if (!(*save = save_trim(*save, x)))
+	*save = save_trim(*save, x);
+	if (!*save)
 		return (ft_free_one(save, -1));
 	return (1);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int			x;
 	int			byte;
@@ -77,10 +82,9 @@ int			get_next_line(int fd, char **line)
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || !line)
 		return (-1);
 	if (!save)
-	{
-		if (!(save = ft_strdup("")))
-			return (-1);
-	}
+		save = ft_strdup("");
+	if (!save)
+		return (-1);
 	x = 0;
 	while (1)
 	{
@@ -88,7 +92,8 @@ int			get_next_line(int fd, char **line)
 			return (line_saver2(&save, line, x));
 		if (save[x] == '\0')
 		{
-			if ((byte = line_saver(&save, line, fd)) == 0 || byte == -1)
+			byte = line_saver(&save, line, fd);
+			if (byte == 0 || byte == -1)
 				return (byte);
 			x = -1;
 		}
